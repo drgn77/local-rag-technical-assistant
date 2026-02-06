@@ -116,24 +116,24 @@ rag_app
 5.Download the LLM model (first run only)
 
 On first execution, the language model must be downloaded:
-~~~ Bash
+~~~ git 
 docker exec -it ollama ollama pull qwen2.5:3b
 ~~~
 
 Verify:
-~~~ Bash
+~~~ 
 docker exec -it ollama ollama list
 ~~~
 
 6.Download the LLM model (first run only)
 
 On first execution, the language model must be downloaded:
-~~~ Bash
+~~~ 
 docker exec -it ollama ollama pull qwen2.5:3b
 ~~~
 
 Verify:
-~~~ Bash
+~~~ 
 docker exec -it ollama ollama list
 ~~~
 

@@ -51,6 +51,92 @@ Example request:
   "reindex": true
 }
 
+## Setup / Configuration (WSL2, Docker)
+
+This project is designed to be executed on Ubuntu running in WSL2 and uses a shared Docker network and persistent volumes to avoid conflicts between multiple projects.
+
+1. Clone the repository
+
+Clone the project inside the Linux filesystem (recommended):
+~~~bash
+git clone https://github.com/drgn77/local-rag-technical-assistant.git
+cd local-rag-technical-assistant
+~~~
+
+The repository should be located in /home/<user>/... and not under /mnt/c.
+
+2. Create shared Docker network
+
+The application uses a common external Docker network required by the evaluation environment:
+~~~bash
+docker network create ai_stack
+~~~
+
+If the network already exists, Docker will return a warning — this is expected.
+
+Qdrant (named volume)
+
+Qdrant stores its vector data in a named Docker volume:
+
+qdrant_data → /qdrant/storage
+
+
+This volume is created automatically by Docker Compose.
+
+3. Prepare volumes
+Create the directory:
+~~~ 
+mkdir -p volumes/ollama
+~~~
+
+This directory is mounted as:
+~~~
+./volumes/ollama → /root/.ollama
+~~~
+4.Start the containers
+
+Build and run the project:
+~~~ bash
+docker compose up -d --build
+~~~
+
+Verify that all required services are running:
+~~~
+docker ps
+~~~
+
+Expected containers:
+
+ollama
+
+qdrant
+
+rag_app
+
+5.Download the LLM model (first run only)
+
+On first execution, the language model must be downloaded:
+~~~ Bash
+docker exec -it ollama ollama pull qwen2.5:3b
+~~~
+
+Verify:
+~~~ Bash
+docker exec -it ollama ollama list
+~~~
+
+6.Download the LLM model (first run only)
+
+On first execution, the language model must be downloaded:
+~~~ Bash
+docker exec -it ollama ollama pull qwen2.5:3b
+~~~
+
+Verify:
+~~~ Bash
+docker exec -it ollama ollama list
+~~~
+
  
 ## Asking Questions (/ask)
 
